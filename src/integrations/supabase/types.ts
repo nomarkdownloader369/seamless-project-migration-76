@@ -102,6 +102,89 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_conversations: {
+        Row: {
+          admin_unread: number
+          created_at: string
+          id: string
+          kind: string
+          sender_hash: string
+          sender_name: string
+          sender_unread: number
+          subject: string
+          thumbnail: string
+          updated_at: string
+          user_id: string | null
+          video_id: string | null
+          video_title: string | null
+          video_url: string | null
+        }
+        Insert: {
+          admin_unread?: number
+          created_at?: string
+          id?: string
+          kind: string
+          sender_hash: string
+          sender_name: string
+          sender_unread?: number
+          subject: string
+          thumbnail?: string
+          updated_at?: string
+          user_id?: string | null
+          video_id?: string | null
+          video_title?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          admin_unread?: number
+          created_at?: string
+          id?: string
+          kind?: string
+          sender_hash?: string
+          sender_name?: string
+          sender_unread?: number
+          subject?: string
+          thumbnail?: string
+          updated_at?: string
+          user_id?: string | null
+          video_id?: string | null
+          video_title?: string | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+          text: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+          text: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contact_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "contact_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       migration_identities: {
         Row: {
           auth_user_id: string | null
@@ -126,6 +209,33 @@ export type Database = {
         }
         Relationships: []
       }
+      support_activity: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          details: Json
+          id: string
+          target_id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          target_id: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          target_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -141,6 +251,42 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      video_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          sender_hash: string
+          status: string
+          thumbnail: string
+          video_id: string
+          video_title: string
+          video_url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason: string
+          sender_hash: string
+          status?: string
+          thumbnail?: string
+          video_id: string
+          video_title: string
+          video_url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          sender_hash?: string
+          status?: string
+          thumbnail?: string
+          video_id?: string
+          video_title?: string
+          video_url?: string
         }
         Relationships: []
       }
@@ -210,6 +356,11 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      support_admin_read: { Args: { p_id: string }; Returns: undefined }
+      support_report_action: {
+        Args: { p_action: string; p_confirmed?: boolean; p_id: string }
+        Returns: undefined
       }
     }
     Enums: {

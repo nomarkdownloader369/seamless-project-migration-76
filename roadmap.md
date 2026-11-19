@@ -1,4 +1,8 @@
 # Roadmap
+- [ ] Apply TABOOBOX branding, Arabic-first RTL/LTR, direct login, interaction feedback and trending badge changes
+- [ ] Add secure video reports and administrative review with durable activity
+- [ ] Add private guest/member contact conversations, replies and unread counts
+- [ ] Verify new visitor/admin flows and permissions
 - [x] Add admin-only AI Assistant threads, Cloud history, disconnected integration interface and automation dashboard; verify access and mobile layout
 - [ ] Remove extra collage zoom and verify original video quality detection
 - [x] Migrate source app, Cloud schema, email + Google sign-in
