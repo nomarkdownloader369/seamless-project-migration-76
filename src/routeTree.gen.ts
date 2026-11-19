@@ -10,33 +10,209 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAssistantRouteImport } from './routes/admin.assistant'
+import { Route as AdminPublishRouteImport } from './routes/admin.publish'
+import { Route as AdminVideosRouteImport } from './routes/admin.videos'
+import { Route as WatchIdRouteImport } from './routes/watch.$id'
+import { Route as AdminAssistantIndexRouteImport } from './routes/admin.assistant.index'
+import { Route as AdminAssistantThreadIdRouteImport } from './routes/admin.assistant.$threadId'
+import { Route as ApiPublicThumbPixelsRouteImport } from './routes/api/public/thumb-pixels'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesRoute = CategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritesRoute = FavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAssistantRoute = AdminAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPublishRoute = AdminPublishRouteImport.update({
+  id: '/publish',
+  path: '/publish',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVideosRoute = AdminVideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const WatchIdRoute = WatchIdRouteImport.update({
+  id: '/watch/$id',
+  path: '/watch/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAssistantIndexRoute = AdminAssistantIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminAssistantRoute,
+} as any)
+const AdminAssistantThreadIdRoute = AdminAssistantThreadIdRouteImport.update({
+  id: '/$threadId',
+  path: '/$threadId',
+  getParentRoute: () => AdminAssistantRoute,
+} as any)
+const ApiPublicThumbPixelsRoute = ApiPublicThumbPixelsRouteImport.update({
+  id: '/api/public/thumb-pixels',
+  path: '/api/public/thumb-pixels',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/categories': typeof CategoriesRoute
+  '/favorites': typeof FavoritesRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/admin/assistant': typeof AdminAssistantRouteWithChildren
+  '/admin/publish': typeof AdminPublishRoute
+  '/admin/videos': typeof AdminVideosRoute
+  '/watch/$id': typeof WatchIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/assistant/$threadId': typeof AdminAssistantThreadIdRoute
+  '/api/public/thumb-pixels': typeof ApiPublicThumbPixelsRoute
+  '/admin/assistant/': typeof AdminAssistantIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/categories': typeof CategoriesRoute
+  '/favorites': typeof FavoritesRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/admin/publish': typeof AdminPublishRoute
+  '/admin/videos': typeof AdminVideosRoute
+  '/watch/$id': typeof WatchIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/assistant/$threadId': typeof AdminAssistantThreadIdRoute
+  '/api/public/thumb-pixels': typeof ApiPublicThumbPixelsRoute
+  '/admin/assistant': typeof AdminAssistantIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/categories': typeof CategoriesRoute
+  '/favorites': typeof FavoritesRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/admin/assistant': typeof AdminAssistantRouteWithChildren
+  '/admin/publish': typeof AdminPublishRoute
+  '/admin/videos': typeof AdminVideosRoute
+  '/watch/$id': typeof WatchIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/assistant/$threadId': typeof AdminAssistantThreadIdRoute
+  '/api/public/thumb-pixels': typeof ApiPublicThumbPixelsRoute
+  '/admin/assistant/': typeof AdminAssistantIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/categories'
+    | '/favorites'
+    | '/login'
+    | '/profile'
+    | '/reset-password'
+    | '/admin/assistant'
+    | '/admin/publish'
+    | '/admin/videos'
+    | '/watch/$id'
+    | '/admin/'
+    | '/admin/assistant/$threadId'
+    | '/api/public/thumb-pixels'
+    | '/admin/assistant/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/categories'
+    | '/favorites'
+    | '/login'
+    | '/profile'
+    | '/reset-password'
+    | '/admin/publish'
+    | '/admin/videos'
+    | '/watch/$id'
+    | '/admin'
+    | '/admin/assistant/$threadId'
+    | '/api/public/thumb-pixels'
+    | '/admin/assistant'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/categories'
+    | '/favorites'
+    | '/login'
+    | '/profile'
+    | '/reset-password'
+    | '/admin/assistant'
+    | '/admin/publish'
+    | '/admin/videos'
+    | '/watch/$id'
+    | '/admin/'
+    | '/admin/assistant/$threadId'
+    | '/api/public/thumb-pixels'
+    | '/admin/assistant/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  CategoriesRoute: typeof CategoriesRoute
+  FavoritesRoute: typeof FavoritesRoute
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  WatchIdRoute: typeof WatchIdRoute
+  ApiPublicThumbPixelsRoute: typeof ApiPublicThumbPixelsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +224,147 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories': {
+      id: '/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favorites': {
+      id: '/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/assistant': {
+      id: '/admin/assistant'
+      path: '/assistant'
+      fullPath: '/admin/assistant'
+      preLoaderRoute: typeof AdminAssistantRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/publish': {
+      id: '/admin/publish'
+      path: '/publish'
+      fullPath: '/admin/publish'
+      preLoaderRoute: typeof AdminPublishRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/videos': {
+      id: '/admin/videos'
+      path: '/videos'
+      fullPath: '/admin/videos'
+      preLoaderRoute: typeof AdminVideosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/watch/$id': {
+      id: '/watch/$id'
+      path: '/watch/$id'
+      fullPath: '/watch/$id'
+      preLoaderRoute: typeof WatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/assistant/': {
+      id: '/admin/assistant/'
+      path: '/'
+      fullPath: '/admin/assistant/'
+      preLoaderRoute: typeof AdminAssistantIndexRouteImport
+      parentRoute: typeof AdminAssistantRoute
+    }
+    '/admin/assistant/$threadId': {
+      id: '/admin/assistant/$threadId'
+      path: '/$threadId'
+      fullPath: '/admin/assistant/$threadId'
+      preLoaderRoute: typeof AdminAssistantThreadIdRouteImport
+      parentRoute: typeof AdminAssistantRoute
+    }
+    '/api/public/thumb-pixels': {
+      id: '/api/public/thumb-pixels'
+      path: '/api/public/thumb-pixels'
+      fullPath: '/api/public/thumb-pixels'
+      preLoaderRoute: typeof ApiPublicThumbPixelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminAssistantRouteChildren {
+  AdminAssistantThreadIdRoute: typeof AdminAssistantThreadIdRoute
+  AdminAssistantIndexRoute: typeof AdminAssistantIndexRoute
+}
+
+const AdminAssistantRouteChildren: AdminAssistantRouteChildren = {
+  AdminAssistantThreadIdRoute: AdminAssistantThreadIdRoute,
+  AdminAssistantIndexRoute: AdminAssistantIndexRoute,
+}
+
+const AdminAssistantRouteWithChildren = AdminAssistantRoute._addFileChildren(
+  AdminAssistantRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminAssistantRoute: typeof AdminAssistantRouteWithChildren
+  AdminPublishRoute: typeof AdminPublishRoute
+  AdminVideosRoute: typeof AdminVideosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAssistantRoute: AdminAssistantRouteWithChildren,
+  AdminPublishRoute: AdminPublishRoute,
+  AdminVideosRoute: AdminVideosRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  CategoriesRoute: CategoriesRoute,
+  FavoritesRoute: FavoritesRoute,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  WatchIdRoute: WatchIdRoute,
+  ApiPublicThumbPixelsRoute: ApiPublicThumbPixelsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

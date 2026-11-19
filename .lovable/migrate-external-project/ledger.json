@@ -1,0 +1,107 @@
+[
+  {
+    "capability": "code",
+    "source": "TanStack React video archive",
+    "outcome": "migrate",
+    "status": "verified",
+    "next_action": "Copied into this project; 31 tests pass; home, categories, login, admin load without errors"
+  },
+  {
+    "capability": "schema",
+    "source": "videos and user_roles",
+    "outcome": "migrate",
+    "status": "verified",
+    "next_action": "Applied to this project Cloud; email and Google sign-in enabled"
+  },
+  {
+    "capability": "records",
+    "source": "No record export attached",
+    "outcome": "migrate",
+    "status": "pending",
+    "next_action": "Attach CSV or JSON video exports"
+  },
+  {
+    "capability": "auth identities",
+    "source": "Google accounts, no user export",
+    "outcome": "migrate",
+    "status": "pending",
+    "next_action": "Attach user IDs, emails, profile and role exports"
+  },
+  {
+    "capability": "authorization",
+    "source": "Database admin roles",
+    "outcome": "migrate",
+    "status": "pending_verification",
+    "next_action": "Re-verify admin flows in this project after first admin sign-in"
+  },
+  {
+    "capability": "uploaded file bytes",
+    "source": "Bundled skull logo and favicons",
+    "outcome": "migrate",
+    "status": "verified",
+    "next_action": "Logo re-hosted in this project from bundled favicon"
+  },
+  {
+    "capability": "external providers",
+    "source": "Cloudfam, YouTube, Vimeo, Dailymotion, Internet Archive",
+    "outcome": "preserve",
+    "status": "pending_verification",
+    "next_action": "YouTube import and iframe render checked; supply production Cloudfam and other provider video links for live playback verification"
+  },
+  {
+    "capability": "AI publishing",
+    "source": "Gemini metadata generation",
+    "outcome": "preserve",
+    "status": "verified",
+    "next_action": "Authenticated metadata generation returned English/Arabic output using source Gemini model"
+  },
+  {
+    "capability": "public endpoints",
+    "source": "Cloudfam metadata server function",
+    "outcome": "preserve",
+    "status": "pending_verification",
+    "next_action": "Restricted Cloudfam metadata fetch and parser preserved; need an existing valid Cloudfam video for live verification"
+  },
+  {
+    "capability": "callbacks",
+    "source": "Managed Google OAuth",
+    "outcome": "migrate",
+    "status": "pending_verification",
+    "next_action": "Google and email enabled; email/password and first-login setup UI preserved; complete Google browser consent and imported-user email verification after exports"
+  },
+  {
+    "capability": "webhooks",
+    "source": "None detected",
+    "outcome": "absent",
+    "status": "verified",
+    "next_action": "None"
+  },
+  {
+    "capability": "schedules",
+    "source": "None detected",
+    "outcome": "absent",
+    "status": "verified",
+    "next_action": "None"
+  },
+  {
+    "capability": "secrets",
+    "source": "Platform managed services only",
+    "outcome": "preserve",
+    "status": "verified",
+    "next_action": "Cloud and Gateway platform bindings verified by successful calls"
+  },
+  {
+    "capability": "cutover",
+    "source": "Unpublished app, unknown existing URL",
+    "outcome": "pending",
+    "status": "pending",
+    "next_action": "Publish and update any existing links"
+  },
+  {
+    "capability": "verification",
+    "source": "Source unit tests and live flows",
+    "outcome": "migrate",
+    "status": "pending_verification",
+    "next_action": "Re-verify admin flows in this project after first admin sign-in"
+  }
+]
