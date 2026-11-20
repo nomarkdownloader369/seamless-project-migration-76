@@ -8,8 +8,8 @@ import { VideoCard } from "@/components/site/VideoCard";
 
 export const Route = createFileRoute("/favorites")({
   head: () => ({ meta: [
-    { title: "Favorites — PUREXDARK" }, { name: "description", content: "Your saved PUREXDARK videos." },
-    { property: "og:title", content: "Favorites — PUREXDARK" }, { property: "og:description", content: "Your saved PUREXDARK videos." },
+    { title: "Favorites — TABOOBOX" }, { name: "description", content: "Your saved TABOOBOX videos." },
+    { property: "og:title", content: "Favorites — TABOOBOX" }, { property: "og:description", content: "Your saved TABOOBOX videos." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }),
   component: Favorites,

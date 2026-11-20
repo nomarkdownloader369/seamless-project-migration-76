@@ -6,8 +6,8 @@ import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/categories")({
   head: () => ({ meta: [
-    { title: "Categories — PUREXDARK" }, { name: "description", content: "Browse PUREXDARK videos by category." },
-    { property: "og:title", content: "Categories — PUREXDARK" }, { property: "og:description", content: "Browse PUREXDARK videos by category." },
+    { title: "Categories — TABOOBOX" }, { name: "description", content: "Browse TABOOBOX videos by category." },
+    { property: "og:title", content: "Categories — TABOOBOX" }, { property: "og:description", content: "Browse TABOOBOX videos by category." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }),
   component: Cats,

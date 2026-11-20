@@ -10,8 +10,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 
 export const Route = createFileRoute("/admin/videos")({
   head: () => ({ meta: [
-    { title: "Manage Videos — PUREXDARK" }, { name: "description", content: "Edit videos and manage publication in the PUREXDARK archive." },
-    { property: "og:title", content: "Manage Videos — PUREXDARK" }, { property: "og:description", content: "Edit videos and manage publication in the PUREXDARK archive." },
+    { title: "Manage Videos — TABOOBOX" }, { name: "description", content: "Edit videos and manage publication in the TABOOBOX archive." },
+    { property: "og:title", content: "Manage Videos — TABOOBOX" }, { property: "og:description", content: "Edit videos and manage publication in the TABOOBOX archive." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" },
   ] }), component: Manage,
 });

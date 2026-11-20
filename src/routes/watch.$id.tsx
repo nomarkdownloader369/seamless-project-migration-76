@@ -1,18 +1,20 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ThumbsUp, Heart, Share2, Eye, LayoutGrid } from "lucide-react";
+import { ThumbsUp, Heart, Share2, Eye, LayoutGrid, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
 import { useStore } from "@/lib/store";
 import { useI18n } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
 import { CATEGORIES, SAMPLE_VIDEOS, formatViews } from "@/lib/videos";
+import { Button } from "@/components/ui/button";
+import { ReportVideo } from "@/components/site/ReportVideo";
 import { VideoCard } from "@/components/site/VideoCard";
 
 export const Route = createFileRoute("/watch/$id")({
   head: ({ params }) => {
     const v = SAMPLE_VIDEOS.find((x) => x.id === params.id);
-    const title = v ? `${v.title} — PUREXDARK` : "Video — PUREXDARK";
-    const desc = v?.description ?? "Watch on PUREXDARK.";
+    const title = v ? `${v.title} — TABOOBOX` : "Video — TABOOBOX";
+    const desc = v?.description ?? "Watch on TABOOBOX.";
     return { meta: [
       { title }, { name: "description", content: desc }, { property: "og:title", content: title }, { property: "og:description", content: desc },
       { property: "og:type", content: "video.other" }, { name: "twitter:card", content: "summary_large_image" },
@@ -66,12 +68,14 @@ function Watch() {
                 <LayoutGrid className="h-3 w-3" />{cat[lang]}
               </Link>
             </div>
-            <div className="scrollbar-none mt-3 flex gap-2 overflow-x-auto">
-              <button onClick={() => setLiked((l) => !l)} className={`${btn} ${liked ? "bg-primary text-primary-foreground" : "bg-surface-2"}`}><ThumbsUp className="h-4 w-4" />{formatViews(v.likes + (liked ? 1 : 0))}</button>
-              <button onClick={() => { if (!user) { navigate({ to: "/login", search: { redirect: `/watch/${v.id}`, reason: "favorites" } }); return; } toggleFavorite(v.id); if (!fav) toast.success(t("favAdded")); }} className={`${btn} bg-surface-2`} aria-pressed={fav}>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button variant="secondary" onClick={() => setLiked((l) => !l)} className={`${btn} ${liked ? "bg-primary text-primary-foreground" : "bg-surface-2"}`}><ThumbsUp className="h-4 w-4" />{formatViews(v.likes + (liked ? 1 : 0))}</Button>
+              <Button variant="secondary" onClick={() => { if (!user) { navigate({ to: "/login", search: { redirect: `/watch/${v.id}`, reason: "favorites" } }); return; } toggleFavorite(v.id); if (!fav) toast.success(t("favAdded")); }} className={`${btn} bg-surface-2`} aria-pressed={fav}>
                 <Heart className={`h-4 w-4 ${fav ? "fill-primary text-primary" : ""}`} />{t("favorites")}
-              </button>
-              <button onClick={share} className={`${btn} bg-surface-2`}><Share2 className="h-4 w-4" />{t("share")}</button>
+              </Button>
+              <Button variant="secondary" onClick={share} className={`${btn} bg-surface-2`}><Share2 className="h-4 w-4" />{t("share")}</Button>
+            <ReportVideo key={v.id} videoId={v.id} title={lang === "ar" ? v.titleAr || v.title : v.title} />
+              <Button asChild variant="secondary"><Link to="/contact" search={{ video: v.id }}><MessageSquare />{lang === "ar" ? "طلب فيديو / تواصل" : "Request / Contact"}</Link></Button>
             </div>
             <p className="mt-3 rounded-lg bg-surface p-3 text-sm leading-relaxed text-muted-foreground">{v.description}</p>
 
@@ -79,7 +83,7 @@ function Watch() {
               <h2 className="mb-3 font-display text-lg font-bold uppercase">{t("comments")} <span className="text-sm text-muted-foreground">{comments.length}</span></h2>
               <form onSubmit={(e) => { e.preventDefault(); if (!text.trim()) return; setComments((c) => [{ name: user?.name ?? t("guest"), text }, ...c]); setText(""); }} className="flex gap-2">
                 <input value={text} onChange={(e) => setText(e.target.value)} placeholder={t("addComment")} className="h-10 flex-1 rounded-full border bg-surface px-4 text-sm outline-none focus:border-primary" />
-                <button className="rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground">{t("post")}</button>
+                <Button variant="secondary" className="rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground">{t("post")}</Button>
               </form>
               <ul className="mt-3 space-y-3">
                 {comments.map((c, i) => (

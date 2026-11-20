@@ -3,12 +3,13 @@ import { LayoutDashboard, Sparkles, Film, LogOut, Heart, ShieldCheck, ChevronRig
 import { useAuth } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
+import { Button } from "@/components/ui/button";
 import { DashboardStats } from "@/components/site/DashboardStats";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({ meta: [
-    { title: "Profile — PUREXDARK" }, { name: "description", content: "Your PUREXDARK profile, favorites and settings." },
-    { property: "og:title", content: "Profile — PUREXDARK" }, { property: "og:description", content: "Your PUREXDARK profile, favorites and settings." },
+    { title: "Profile — TABOOBOX" }, { name: "description", content: "Your TABOOBOX profile, favorites and settings." },
+    { property: "og:title", content: "Profile — TABOOBOX" }, { property: "og:description", content: "Your TABOOBOX profile, favorites and settings." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }),
   component: Profile,
@@ -16,7 +17,7 @@ export const Route = createFileRoute("/profile")({
 
 function Profile() {
   const { user, ready, signOut } = useAuth();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { videos, favorites } = useStore();
   const navigate = useNavigate();
   const favs = videos.filter((v) => favorites.includes(v.id));
@@ -30,14 +31,14 @@ function Profile() {
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="flex items-center gap-2 text-lg font-bold"><span className="truncate">{user?.name ?? t("guest")}</span>
-            {user?.isAdmin && <span className="flex shrink-0 items-center gap-1 rounded bg-primary px-1.5 py-0.5 text-[10px] font-bold uppercase text-primary-foreground"><ShieldCheck className="h-3 w-3" />Admin</span>}
+            {user?.isAdmin && <span className="flex shrink-0 items-center gap-1 rounded bg-primary px-1.5 py-0.5 text-[10px] font-bold uppercase text-primary-foreground"><ShieldCheck className="h-3 w-3" />{lang === "ar" ? "مسؤول" : "Admin"}</span>}
           </h1>
-          <p className="truncate text-sm text-muted-foreground" dir="ltr">{user?.email ?? t("notSignedIn")}</p>
+          <p className="truncate text-sm text-muted-foreground" dir={user?.email ? "ltr" : undefined}>{user?.email ?? t("notSignedIn")}</p>
         </div>
         {user ? (
-          <button onClick={async () => { await signOut(); navigate({ to: "/" }); }} className="flex items-center gap-1.5 rounded-full bg-surface-2 px-3 py-2 text-sm font-semibold hover:bg-accent">
+          <Button variant="secondary" onClick={async () => { await signOut(); navigate({ to: "/" }); }} className="flex items-center gap-1.5 rounded-full bg-surface-2 px-3 py-2 text-sm font-semibold hover:bg-accent">
             <LogOut className="h-4 w-4 rtl:rotate-180" /><span className="hidden sm:inline">{t("logout")}</span>
-          </button>
+          </Button>
         ) : (
           <Link to="/login" className="rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">{t("login")}</Link>
         )}

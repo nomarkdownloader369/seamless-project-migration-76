@@ -52,7 +52,7 @@ export const SAMPLE_VIDEOS: Video[] = Array.from({ length: 52 }, (_, i) => {
     id: `v${i + 1}`,
     title: t,
     titleAr: `${nouns[(i * 3) % nouns.length]} ${arWords[i % arWords.length]}`,
-    description: `${t} — a cinematic piece from the PUREXDARK archive. Restored in high quality with full detail, part of our curated ${cats[i % cats.length]} collection.`,
+    description: `${t} — a cinematic piece from the TABOOBOX archive. Restored in high quality with full detail, part of our curated ${cats[i % cats.length]} collection.`,
     category: cats[i % cats.length] ?? "classic",
     thumbnail: `https://picsum.photos/seed/pxd${i + 7}/640/360`,
     embedUrl: embeds[i % embeds.length] ?? "https://www.youtube.com/embed/aqz-KE-bpKQ",

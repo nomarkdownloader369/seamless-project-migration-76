@@ -15,7 +15,7 @@ import logo from "@/assets/logo-skull.png.asset.json";
 
 export function AssistantEmpty() {
   const { lang } = useI18n();
-  return <div className="flex min-h-[360px] flex-col items-center justify-center gap-3 px-5 text-center lg:min-h-[600px]"><img src={logo.url} alt="" className="size-16 object-contain" /><h2 className="font-display text-xl font-bold uppercase">PUREXDARK {lang === "ar" ? "المساعد" : "Assistant"}</h2><p className="text-sm text-muted-foreground">{lang === "ar" ? "اختر محادثة أو أنشئ محادثة جديدة." : "Select a conversation or start a new chat."}</p><span className="mt-2 flex items-center gap-2 text-xs text-muted-foreground"><CloudOff className="size-4" />{lang === "ar" ? "المحرك غير متصل" : "AI engine not connected"}</span></div>;
+  return <div className="flex min-h-[360px] flex-col items-center justify-center gap-3 px-5 text-center lg:min-h-[600px]"><img src={logo.url} alt="" className="size-16 object-contain" /><h2 className="font-display text-xl font-bold uppercase">TABOOBOX {lang === "ar" ? "المساعد" : "Assistant"}</h2><p className="text-sm text-muted-foreground">{lang === "ar" ? "اختر محادثة أو أنشئ محادثة جديدة." : "Select a conversation or start a new chat."}</p><span className="mt-2 flex items-center gap-2 text-xs text-muted-foreground"><CloudOff className="size-4" />{lang === "ar" ? "المحرك غير متصل" : "AI engine not connected"}</span></div>;
 }
 
 export function AssistantChat({ threadId }: { threadId: string }) {

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { TrendingCarousel } from "@/components/site/TrendingCarousel";
 import { CategoryBar } from "@/components/site/CategoryBar";
 import { VideoCard } from "@/components/site/VideoCard";
@@ -17,10 +18,10 @@ export const Route = createFileRoute("/")({
   }),
   head: () => ({
     meta: [
-      { title: "PUREXDARK — Trending & Latest Videos" },
-      { name: "description", content: "Browse trending and latest videos in the PUREXDARK archive." },
-      { property: "og:title", content: "PUREXDARK — Trending & Latest Videos" },
-      { property: "og:description", content: "Browse trending and latest videos in the PUREXDARK archive." },
+      { title: "TABOOBOX — Trending & Latest Videos" },
+      { name: "description", content: "Browse trending and latest videos in the TABOOBOX archive." },
+      { property: "og:title", content: "TABOOBOX — Trending & Latest Videos" },
+      { property: "og:description", content: "Browse trending and latest videos in the TABOOBOX archive." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -62,16 +63,16 @@ function Home() {
       )}
       {pages > 1 && (
         <nav className="mt-6 flex items-center justify-center gap-1.5" aria-label="Pagination">
-          <button disabled={page === 1} onClick={() => go(page - 1)} className="flex h-10 items-center gap-1 rounded-md bg-surface-2 px-3 text-sm font-semibold disabled:opacity-40">
+          <Button variant="secondary" disabled={page === 1} onClick={() => go(page - 1)} className="flex h-10 items-center gap-1 rounded-md bg-surface-2 px-3 text-sm font-semibold disabled:opacity-40">
             <ChevronLeft className="h-4 w-4 rtl:rotate-180" />{t("prev")}
-          </button>
+          </Button>
           {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
-            <button key={p} onClick={() => go(p)} aria-current={p === page ? "page" : undefined}
-              className={`h-10 min-w-10 rounded-md text-sm font-bold ${p === page ? "bg-primary text-primary-foreground" : "bg-surface-2 hover:bg-accent"}`}>{p}</button>
+            <Button variant="secondary" key={p} onClick={() => go(p)} aria-current={p === page ? "page" : undefined}
+              className={`h-10 min-w-10 rounded-md text-sm font-bold ${p === page ? "bg-primary text-primary-foreground" : "bg-surface-2 hover:bg-accent"}`}>{p}</Button>
           ))}
-          <button disabled={page === pages} onClick={() => go(page + 1)} className="flex h-10 items-center gap-1 rounded-md bg-surface-2 px-3 text-sm font-semibold disabled:opacity-40">
+          <Button variant="secondary" disabled={page === pages} onClick={() => go(page + 1)} className="flex h-10 items-center gap-1 rounded-md bg-surface-2 px-3 text-sm font-semibold disabled:opacity-40">
             {t("next")}<ChevronRight className="h-4 w-4 rtl:rotate-180" />
-          </button>
+          </Button>
         </nav>
       )}
     </div>

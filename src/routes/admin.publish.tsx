@@ -16,8 +16,8 @@ import { getCloudfamThumbnail } from "@/lib/video-import.functions";
 
 export const Route = createFileRoute("/admin/publish")({
   head: () => ({ meta: [
-    { title: "Video Importer — PUREXDARK" }, { name: "description", content: "Import and publish videos in the PUREXDARK archive." },
-    { property: "og:title", content: "Video Importer — PUREXDARK" }, { property: "og:description", content: "Import and publish videos in the PUREXDARK archive." },
+    { title: "Video Importer — TABOOBOX" }, { name: "description", content: "Import and publish videos in the TABOOBOX archive." },
+    { property: "og:title", content: "Video Importer — TABOOBOX" }, { property: "og:description", content: "Import and publish videos in the TABOOBOX archive." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }), component: Publisher,
 });
@@ -156,7 +156,7 @@ function Publisher() {
   const exportJson = () => {
     const blob = new Blob([JSON.stringify(items.map(({ embed, thumbnail, status, meta }) => ({ embed, thumbnail, status, ...meta })), null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = "purexdark-videos.json"; a.click();
+    const a = document.createElement("a"); a.href = url; a.download = "taboobox-videos.json"; a.click();
     URL.revokeObjectURL(url);
   };
 

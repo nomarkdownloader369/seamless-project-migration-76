@@ -21,15 +21,15 @@ export const Route = createFileRoute("/login")({
     reason: s["reason"] === "favorites" ? "favorites" : undefined,
   }),
   head: () => ({ meta: [
-    { title: "Sign in — PUREXDARK" }, { name: "description", content: "Sign in to PUREXDARK with email or Google." },
-    { property: "og:title", content: "Sign in — PUREXDARK" }, { property: "og:description", content: "Sign in to PUREXDARK with email or Google." },
+    { title: "Sign in — TABOOBOX" }, { name: "description", content: "Sign in to TABOOBOX with email or Google." },
+    { property: "og:title", content: "Sign in — TABOOBOX" }, { property: "og:description", content: "Sign in to TABOOBOX with email or Google." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }),
   component: Login,
 });
 
 function Login() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { signIn } = useAuth();
   const { redirect, reason } = Route.useSearch();
   const [busy, setBusy] = useState(false);
@@ -73,12 +73,12 @@ function Login() {
 
   const setupPassword = async () => {
     setError(null); setNotice(null);
-    if (!email.trim()) { setError("Enter your email address first."); return; }
+    if (!email.trim()) { setError(lang === "ar" ? "اكتب بريدك الإلكتروني أولًا." : "Enter your email address first."); return; }
     setBusy(true);
     const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/reset-password` } });
     setBusy(false);
     if (error) setError(error.message);
-    else setNotice("Check your email to verify your account and choose a password.");
+    else setNotice(lang === "ar" ? "افتح بريدك الإلكتروني للتحقق واختيار كلمة سر." : "Check your email to verify your account and choose a password.");
   };
 
   return (
@@ -96,10 +96,10 @@ function Login() {
 
         <div className="mt-6 grid grid-cols-2 rounded-full bg-surface-2 p-1" role="tablist">
           {(["in", "up"] as const).map((m) => (
-            <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => { setMode(m); setError(null); }}
+            <Button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => { setMode(m); setError(null); }}
               className={`rounded-full py-2 text-sm font-semibold transition-colors ${mode === m ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}>
               {m === "in" ? t("tabSignIn") : t("tabSignUp")}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -111,7 +111,7 @@ function Login() {
             </label>
           )}
           <label className="block text-xs font-semibold text-muted-foreground">{t("email")}
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email"
+            <input dir="ltr" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email"
               className="mt-1 h-11 w-full rounded-lg border bg-background px-3 text-sm text-foreground outline-none focus:border-primary" />
           </label>
           <label className="block text-xs font-semibold text-muted-foreground">{t("password")}
@@ -119,13 +119,13 @@ function Login() {
               autoComplete={mode === "in" ? "current-password" : "new-password"} placeholder={mode === "up" ? t("pwMin") : undefined}
               className="mt-1 h-11 w-full rounded-lg border bg-background px-3 text-sm text-foreground outline-none focus:border-primary" />
           </label>
-          <button type="submit" disabled={busy}
+          <Button type="submit" disabled={busy}
             className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50">
             {busy && <Loader2 className="h-4 w-4 animate-spin" />}{mode === "in" ? t("signInBtn") : t("signUpBtn")}
-          </button>
+          </Button>
         </form>
         <Button type="button" variant="link" disabled={busy} onClick={setupPassword} className="mt-2 whitespace-normal">
-          Verify email / set a new password
+          {lang === "ar" ? "تأكيد البريد / تعيين كلمة سر جديدة" : "Verify email / set a new password"}
         </Button>
 
         {notice && (
@@ -143,7 +143,7 @@ function Login() {
         <GoogleButton label={t("continueGoogle")} onClick={start} disabled={busy} />
 
         <Link to="/" search={{ q: undefined, cat: undefined }} className="mt-6 inline-block text-xs font-semibold text-muted-foreground hover:text-primary">
-          ← {t("browse")}
+          <span className="inline-block rtl:rotate-180">←</span> {t("browse")}
         </Link>
       </div>
     </div>

@@ -48,3 +48,7 @@ use the editor.
 - Parse bulk embeds with a non-executing HTML parser and canonical URL deduplication; multiline HTML must produce independent safe entries.
 - Store publisher tags alongside captions in the existing video description; this preserves tags without changing other pages or the schema.
 - Suppress catalog reads during inserts and confirm returned row IDs before removing review items; only persisted rows count as published.
+
+- Visitor support uses server-validated hashed capability references or verified account ownership; private rows never expose capability hashes to browsers.
+- Contact creation and report moderation use transactional database functions, and administrative replies/deletions produce durable activity through triggers; failure must never produce partial success.
+- Preserve legacy browser preference keys during rebranding so existing visitor choices and saved reviews remain intact.

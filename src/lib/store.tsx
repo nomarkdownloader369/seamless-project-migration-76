@@ -107,6 +107,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    const refresh = () => { gate.current.invalidate(); void load(); };
+    window.addEventListener("taboobox-catalog-refresh", refresh);
+    return () => window.removeEventListener("taboobox-catalog-refresh", refresh);
+  }, [load]);
+  useEffect(() => {
     const f = localStorage.getItem("pxd-favs");
     if (f) { try { const saved: unknown = JSON.parse(f); if (Array.isArray(saved)) setFavorites(saved.filter((x): x is string => typeof x === "string")); } catch { localStorage.removeItem("pxd-favs"); } }
     setLoaded(true);

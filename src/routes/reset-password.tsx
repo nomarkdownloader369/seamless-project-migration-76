@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/reset-password")({
   head: () => ({ meta: [
-    { title: "Set Password — PUREXDARK" }, { name: "description", content: "Verify your email and set your PUREXDARK password." },
-    { property: "og:title", content: "Set Password — PUREXDARK" }, { property: "og:description", content: "Verify your email and set your PUREXDARK password." },
+    { title: "Set Password — TABOOBOX" }, { name: "description", content: "Verify your email and set your TABOOBOX password." },
+    { property: "og:title", content: "Set Password — TABOOBOX" }, { property: "og:description", content: "Verify your email and set your TABOOBOX password." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }), component: SetPassword,
 });

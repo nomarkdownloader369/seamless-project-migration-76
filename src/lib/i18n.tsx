@@ -7,7 +7,7 @@ const dict = {
     profile: "Profile", favorites: "Favorites", views: "views", prev: "Previous", next: "Next", login: "Sign in",
     logout: "Log out", like: "Like", share: "Share", comments: "Comments", related: "Related Videos",
     addComment: "Add a comment…", post: "Post", rights: "All rights reserved.", noResults: "No videos found.",
-    signInTitle: "Sign in to PUREXDARK", signInSub: "Sign in to save favorites and comment.",
+    signInTitle: "Sign in to TABOOBOX", signInSub: "Sign in to save favorites and comment.",
     continueGoogle: "Continue with Google", guest: "Guest", notSignedIn: "You're not signed in.",
     settings: "Account settings", language: "Language", dashboard: "Dashboard", publish: "AI Video Publisher",
     manage: "Manage Videos", adminTools: "Administrator tools", copied: "Link copied", favAdded: "Added to favorites",
@@ -19,7 +19,7 @@ const dict = {
     profile: "البروفايل", favorites: "المفضلة", views: "مشاهدة", prev: "اللي قبله", next: "اللي بعده", login: "تسجيل الدخول",
     logout: "تسجيل الخروج", like: "عجبني", share: "شير", comments: "التعليقات", related: "فيديوهات شبهه",
     addComment: "اكتب تعليق…", post: "انشر", rights: "كل الحقوق محفوظة.", noResults: "مفيش فيديوهات.",
-    signInTitle: "ادخل على PUREXDARK", signInSub: "سجّل دخول عشان تحفظ المفضلة وتعلّق.",
+    signInTitle: "ادخل على TABOOBOX", signInSub: "سجّل دخول عشان تحفظ المفضلة وتعلّق.",
     continueGoogle: "كمّل بجوجل", guest: "زائر", notSignedIn: "إنت مش مسجّل دخول.",
     settings: "إعدادات الحساب", language: "اللغة", dashboard: "لوحة التحكم", publish: "ناشر الفيديو بالذكاء الاصطناعي",
     manage: "إدارة الفيديوهات", adminTools: "أدوات الأدمن", copied: "اللينك اتنسخ", favAdded: "اتضاف للمفضلة",
@@ -30,20 +30,22 @@ const dict = {
 export type DictKey = keyof typeof dict.en;
 
 const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: DictKey) => string }>({
-  lang: "en", setLang: () => {}, t: (k) => dict.en[k],
+  lang: "ar", setLang: () => {}, t: (k) => dict.ar[k],
 });
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>("ar");
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const saved = localStorage.getItem("pxd-lang");
     if (saved === "ar" || saved === "en") setLang(saved);
+    setLoaded(true);
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    localStorage.setItem("pxd-lang", lang);
-  }, [lang]);
+    if (loaded) localStorage.setItem("pxd-lang", lang);
+  }, [lang, loaded]);
   return <Ctx.Provider value={{ lang, setLang, t: (k) => dict[lang][k] }}>{children}</Ctx.Provider>;
 }
 export const useI18n = () => useContext(Ctx);

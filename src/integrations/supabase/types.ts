@@ -358,6 +358,21 @@ export type Database = {
         Returns: boolean
       }
       support_admin_read: { Args: { p_id: string }; Returns: undefined }
+      support_create_contact: {
+        Args: {
+          p_hash: string
+          p_kind: string
+          p_name: string
+          p_subject: string
+          p_text: string
+          p_thumbnail?: string
+          p_user?: string
+          p_video_id?: string
+          p_video_title?: string
+          p_video_url?: string
+        }
+        Returns: string
+      }
       support_report_action: {
         Args: { p_action: string; p_confirmed?: boolean; p_id: string }
         Returns: undefined

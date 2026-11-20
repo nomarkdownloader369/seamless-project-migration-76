@@ -48,7 +48,7 @@ export function AssistantWorkspace() {
       <div className="min-w-0"><div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase text-muted-foreground"><ShieldCheck className="size-3.5 text-primary" />{ar ? "خاص بالمسؤول" : "Administrator workspace"}</div><h1 className="font-display text-2xl font-bold uppercase">{ar ? "المساعد الذكي" : "AI Assistant"}</h1></div>
       <span className="flex items-center gap-2 rounded-md border px-3 py-2 text-xs text-muted-foreground"><span className="size-1.5 rounded-full bg-muted-foreground" />{ar ? "المحرك غير متصل" : "AI engine not connected"}</span>
     </header>
-    <Tabs value={tab} onValueChange={setTab} className="mb-4 min-w-0"><div className="-mx-3 overflow-x-auto px-3 md:mx-0 md:px-0 [scrollbar-width:none]"><TabsList className="h-auto w-max min-w-full justify-start gap-1 bg-transparent p-0">
+    <Tabs dir={ar ? "rtl" : "ltr"} value={tab} onValueChange={setTab} className="mb-4 min-w-0"><div className="-mx-3 overflow-x-auto px-3 md:mx-0 md:px-0 [scrollbar-width:none]"><TabsList className="h-auto w-max min-w-full justify-start gap-1 bg-transparent p-0">
       <TabsTrigger value="chat" className="shrink-0 gap-2"><MessageSquare className="size-4" />{ar ? "المحادثات" : "Chat"}</TabsTrigger>
       <TabsTrigger value="automation" className="shrink-0 gap-2"><Workflow className="size-4" />{ar ? "الأتمتة" : "Automation"}</TabsTrigger>
       <TabsTrigger value="integrations" className="shrink-0 gap-2"><Cable className="size-4" />{ar ? "الاتصالات" : "Integrations"}</TabsTrigger>

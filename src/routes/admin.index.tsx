@@ -6,7 +6,7 @@ import { Sparkles, Film } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Thumb } from "@/components/site/Thumb";
 
-export const Route = createFileRoute("/admin/")({ head: () => ({ meta: [{ title: "Dashboard — PUREXDARK" }, { name: "description", content: "Manage the PUREXDARK video archive and publication activity." }, { property: "og:title", content: "Dashboard — PUREXDARK" }, { property: "og:description", content: "Manage the PUREXDARK video archive and publication activity." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }), component: Dashboard });
+export const Route = createFileRoute("/admin/")({ head: () => ({ meta: [{ title: "Dashboard — TABOOBOX" }, { name: "description", content: "Manage the TABOOBOX video archive and publication activity." }, { property: "og:title", content: "Dashboard — TABOOBOX" }, { property: "og:description", content: "Manage the TABOOBOX video archive and publication activity." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }), component: Dashboard });
 
 function Dashboard() {
   const { videos } = useStore();

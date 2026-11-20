@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { SupportInbox } from "@/components/site/SupportInbox";
+export const Route = createFileRoute("/admin/reports")({ head: () => ({ meta: [{ title: "Video Reports — TABOOBOX" }, { name: "description", content: "Private TABOOBOX video reporting inbox and review activity." }, { property: "og:title", content: "Video Reports — TABOOBOX" }, { property: "og:description", content: "Private TABOOBOX video reporting inbox and review activity." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] }), component: () => <SupportInbox mode="reports" /> });

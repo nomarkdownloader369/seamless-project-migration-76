@@ -12,13 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAssistantRouteImport } from './routes/admin.assistant'
+import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminPublishRouteImport } from './routes/admin.publish'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminVideosRouteImport } from './routes/admin.videos'
 import { Route as WatchIdRouteImport } from './routes/watch.$id'
 import { Route as AdminAssistantIndexRouteImport } from './routes/admin.assistant.index'
@@ -38,6 +41,11 @@ const AdminRoute = AdminRouteImport.update({
 const CategoriesRoute = CategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -70,9 +78,19 @@ const AdminAssistantRoute = AdminAssistantRouteImport.update({
   path: '/assistant',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminMessagesRoute = AdminMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPublishRoute = AdminPublishRouteImport.update({
   id: '/publish',
   path: '/publish',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminVideosRoute = AdminVideosRouteImport.update({
@@ -105,12 +123,15 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/favorites': typeof FavoritesRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/assistant': typeof AdminAssistantRouteWithChildren
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/publish': typeof AdminPublishRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/videos': typeof AdminVideosRoute
   '/watch/$id': typeof WatchIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -121,11 +142,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/favorites': typeof FavoritesRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/publish': typeof AdminPublishRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/videos': typeof AdminVideosRoute
   '/watch/$id': typeof WatchIdRoute
   '/admin': typeof AdminIndexRoute
@@ -138,12 +162,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/favorites': typeof FavoritesRoute
   '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/assistant': typeof AdminAssistantRouteWithChildren
+  '/admin/messages': typeof AdminMessagesRoute
   '/admin/publish': typeof AdminPublishRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/videos': typeof AdminVideosRoute
   '/watch/$id': typeof WatchIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -157,12 +184,15 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/categories'
+    | '/contact'
     | '/favorites'
     | '/login'
     | '/profile'
     | '/reset-password'
     | '/admin/assistant'
+    | '/admin/messages'
     | '/admin/publish'
+    | '/admin/reports'
     | '/admin/videos'
     | '/watch/$id'
     | '/admin/'
@@ -173,11 +203,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/categories'
+    | '/contact'
     | '/favorites'
     | '/login'
     | '/profile'
     | '/reset-password'
+    | '/admin/messages'
     | '/admin/publish'
+    | '/admin/reports'
     | '/admin/videos'
     | '/watch/$id'
     | '/admin'
@@ -189,12 +222,15 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/categories'
+    | '/contact'
     | '/favorites'
     | '/login'
     | '/profile'
     | '/reset-password'
     | '/admin/assistant'
+    | '/admin/messages'
     | '/admin/publish'
+    | '/admin/reports'
     | '/admin/videos'
     | '/watch/$id'
     | '/admin/'
@@ -207,6 +243,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   CategoriesRoute: typeof CategoriesRoute
+  ContactRoute: typeof ContactRoute
   FavoritesRoute: typeof FavoritesRoute
   LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
@@ -236,6 +273,13 @@ declare module '@tanstack/react-router' {
       path: '/categories'
       fullPath: '/categories'
       preLoaderRoute: typeof CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -280,11 +324,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAssistantRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/messages': {
+      id: '/admin/messages'
+      path: '/messages'
+      fullPath: '/admin/messages'
+      preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/publish': {
       id: '/admin/publish'
       path: '/publish'
       fullPath: '/admin/publish'
       preLoaderRoute: typeof AdminPublishRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/videos': {
@@ -341,14 +399,18 @@ const AdminAssistantRouteWithChildren = AdminAssistantRoute._addFileChildren(
 
 interface AdminRouteChildren {
   AdminAssistantRoute: typeof AdminAssistantRouteWithChildren
+  AdminMessagesRoute: typeof AdminMessagesRoute
   AdminPublishRoute: typeof AdminPublishRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminVideosRoute: typeof AdminVideosRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAssistantRoute: AdminAssistantRouteWithChildren,
+  AdminMessagesRoute: AdminMessagesRoute,
   AdminPublishRoute: AdminPublishRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminVideosRoute: AdminVideosRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -359,6 +421,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   CategoriesRoute: CategoriesRoute,
+  ContactRoute: ContactRoute,
   FavoritesRoute: FavoritesRoute,
   LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,

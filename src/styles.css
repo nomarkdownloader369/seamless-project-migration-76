@@ -124,3 +124,15 @@
   background: color-mix(in oklab, var(--color-background) 88%, transparent);
   backdrop-filter: blur(14px);
 }
+
+@layer base {
+  * { letter-spacing: 0; }
+  button, a, summary, [role="button"] { touch-action: manipulation; }
+  button, a, summary { transition: background-color 140ms, color 140ms, transform 140ms, filter 140ms; }
+  button:not(:disabled):active, a:active, summary:active { transform: scale(0.97); filter: brightness(0.85); }
+  button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+  button:disabled { cursor: not-allowed; }
+  input, textarea { text-align: start; }
+  [dir="rtl"] .font-display:not(.brand-wordmark *) { font-family: var(--font-arabic); }
+  @media (prefers-reduced-motion: reduce) { button, a, summary { transition: none; } button:active, a:active, summary:active { transform: none; } }
+}
