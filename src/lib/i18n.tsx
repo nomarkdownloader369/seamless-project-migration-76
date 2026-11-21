@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type Lang = "en" | "ar";
+export const DEFAULT_LANGUAGE: Lang = "ar";
+export function visitorLanguage(saved: unknown): Lang { return saved === "en" || saved === "ar" ? saved : DEFAULT_LANGUAGE; }
 const dict = {
   en: {
     search: "Search videos…", home: "Home", categories: "Categories", trending: "Trending Now", latest: "Latest Videos",
@@ -34,11 +36,11 @@ const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: DictK
 });
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("ar");
+  const [lang, setLang] = useState<Lang>(DEFAULT_LANGUAGE);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const saved = localStorage.getItem("pxd-lang");
-    if (saved === "ar" || saved === "en") setLang(saved);
+    setLang(visitorLanguage(saved));
     setLoaded(true);
   }, []);
   useEffect(() => {

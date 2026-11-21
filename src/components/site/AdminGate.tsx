@@ -1,3 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getSupportInbox } from "@/lib/support.functions";
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "@tanstack/react-router";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -12,6 +15,9 @@ export function AdminShell() {
   const { t, lang } = useI18n();
   const loc = useLocation();
   const [open, setOpen] = useState(false);
+  const fetchInbox = useServerFn(getSupportInbox);
+  const inbox = useQuery({ queryKey: ["support-inbox", user?.id], queryFn: () => fetchInbox(), enabled: user?.isAdmin === true, refetchInterval: 30000 });
+  const unread = inbox.data?.conversations.reduce((n, c) => n + c.admin_unread, 0) ?? 0;
   if (!ready) return <div className="flex justify-center p-16"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>;
   if (!user?.isAdmin)
     return (
@@ -48,8 +54,8 @@ export function AdminShell() {
               <SheetHeader className="p-0 pb-3"><SheetTitle className="font-display text-sm font-bold uppercase tracking-widest text-muted-foreground">TABOOBOX · {lang === "ar" ? "لوحة التحكم" : "Control panel"}</SheetTitle></SheetHeader>
               <nav aria-label="Control panel" className="grid gap-1">
                 {tabs.map(({ to, label, icon: I }) => (
-                  <Button key={to} asChild variant={isActive(to) ? "default" : "ghost"} className="min-h-11 justify-start">
-                    <Link to={to} onClick={() => setOpen(false)} aria-current={isActive(to) ? "page" : undefined}><I className="h-4 w-4" />{label}</Link>
+                  <Button key={to} asChild variant={isActive(to) ? "default" : "ghost"} className="h-auto min-h-11 justify-start whitespace-normal text-start">
+                    <Link to={to} onClick={() => setOpen(false)} aria-current={isActive(to) ? "page" : undefined}><I className="h-4 w-4" /><span className="min-w-0 flex-1">{label}</span>{to === "/admin/messages" && unread > 0 && <span className="rounded bg-primary px-1.5 text-xs text-primary-foreground">{unread}</span>}</Link>
                   </Button>
                 ))}
               </nav>
@@ -64,8 +70,8 @@ export function AdminShell() {
             </div>
             <nav aria-label="Control panel" className="grid grid-cols-1 gap-1">
               {tabs.map(({ to, label, icon: I }) => (
-                <Button key={to} asChild variant={isActive(to) ? "default" : "ghost"} className="h-auto min-h-11 justify-start gap-1 px-3 py-2 text-sm">
-                  <Link to={to} aria-current={isActive(to) ? "page" : undefined}><I className="h-4 w-4" />{label}</Link>
+                <Button key={to} asChild variant={isActive(to) ? "default" : "ghost"} className="h-auto min-h-11 justify-start gap-2 whitespace-normal px-3 py-2 text-start text-sm">
+                  <Link to={to} aria-current={isActive(to) ? "page" : undefined}><I className="h-4 w-4" /><span className="min-w-0 flex-1">{label}</span>{to === "/admin/messages" && unread > 0 && <span className="rounded bg-primary px-1.5 text-xs text-primary-foreground">{unread}</span>}</Link>
                 </Button>
               ))}
             </nav>

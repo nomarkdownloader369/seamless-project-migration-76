@@ -1,3 +1,5 @@
+import { useI18n } from "@/lib/i18n";
+import { adminCopy } from "@/lib/admin-copy";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Sparkles, Upload, Trash2, Send, Download, Pencil, Loader2, X } from "lucide-react";
@@ -34,6 +36,8 @@ const statusCls: Record<Status, string> = {
 const field = "w-full rounded-md border bg-background px-3 py-2 text-sm outline-none focus:border-primary";
 
 function Publisher() {
+  const { lang } = useI18n(); const ar = lang === "ar";
+  const tr = (value: string) => ar ? adminCopy[value] ?? value : value;
   const { addVideos, videos } = useStore();
   const lock = useRef(false);
   const [issues, setIssues] = useState<ImportIssue[]>([]);
@@ -163,15 +167,15 @@ function Publisher() {
   const editing = items.find((i) => i.id === editId);
 
   const step = items.length ? (approved.length ? 3 : 2) : 1;
-  const steps = ["Import", "Review with AI", "Publish"];
+  const steps = [ar ? "استيراد" : "Import", ar ? "مراجعة بالذكاء الاصطناعي" : "Review with AI", ar ? "نشر" : "Publish"];
   const statusLabel: Record<Status, string> = { imported: "New", analyzing: "AI writing…", ready: "Ready", approved: "Approved", error: "Needs attention" };
 
   return (
     <div className="space-y-5 pb-28 md:pb-24">
       <header className="panel flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between md:p-5">
         <div>
-          <h2 className="font-display text-2xl font-bold uppercase tracking-wide">AI video publishing</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Paste links, let AI write titles, descriptions and tags in English and Arabic, then publish.</p>
+          <h2 className="font-display text-2xl font-bold uppercase tracking-wide">{tr("AI video publishing")}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{tr("Paste links, let AI write titles, descriptions and tags in English and Arabic, then publish.")}</p>
         </div>
         <ol className="flex items-center gap-2 text-xs font-semibold" aria-label="Publishing steps">
           {steps.map((s, i) => (
@@ -185,11 +189,11 @@ function Publisher() {
       </header>
 
       <section className="panel p-4 md:p-5">
-        <div className="mb-3 flex items-center gap-2"><span className="step-dot step-active">1</span><label htmlFor="video-import" className="font-display text-lg font-bold uppercase">Add video links</label></div>
-        <p className="mb-3 text-xs text-muted-foreground">One per line. Supports Cloudfam, YouTube, Vimeo, Dailymotion and Internet Archive links or embed codes.</p>
+        <div className="mb-3 flex items-center gap-2"><span className="step-dot step-active">1</span><label htmlFor="video-import" className="font-display text-lg font-bold uppercase">{tr("Add video links")}</label></div>
+        <p className="mb-3 text-xs text-muted-foreground">{tr("One per line. Supports Cloudfam, YouTube, Vimeo, Dailymotion and Internet Archive links or embed codes.")}</p>
         <textarea id="video-import" disabled={busy} aria-label="Video URLs or embed codes" value={raw} onChange={(e) => setRaw(e.target.value)} rows={5} dir="ltr" placeholder={'<iframe src="https://cloudfam.io/embed/..."></iframe>\nhttps://youtu.be/...'} className={`${field} font-mono text-xs`} />
         <div className="mt-3 flex flex-wrap items-center gap-3">
-          <Button onClick={doImport} disabled={busy || !raw.trim()} className="h-11 px-6">{importing ? <Loader2 className="animate-spin" /> : <Upload />}{importing ? "Importing…" : "Import videos"}</Button>
+          <Button onClick={doImport} disabled={busy || !raw.trim()} className="h-11 px-6">{importing ? <Loader2 className="animate-spin" /> : <Upload />}{importing ? ar ? "جارٍ الاستيراد…" : "Importing…" : ar ? "استيراد الفيديوهات" : "Import videos"}</Button>
           {(importedCount > 0 || issues.length > 0) && <p role="status" className="text-sm text-muted-foreground"><span className="font-semibold text-success">{importedCount} imported</span>{issues.length > 0 && <> · <span className="font-semibold text-primary">{issues.length} skipped</span></>}</p>}
         </div>
         {issues.length > 0 && <ul className="mt-3 max-h-40 space-y-1 overflow-y-auto rounded-md bg-surface-2 p-3 text-xs text-muted-foreground">{issues.map((issue, i) => <li key={i} className="break-all">{issue.reason}: {issue.entry}</li>)}</ul>}
@@ -199,15 +203,15 @@ function Publisher() {
 
       <section className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2"><span className={`step-dot ${items.length ? "step-active" : ""}`}>2</span><h2 className="font-display text-lg font-bold uppercase">Review <span className="text-sm text-muted-foreground">{items.length}</span></h2></div>
+          <div className="flex items-center gap-2"><span className={`step-dot ${items.length ? "step-active" : ""}`}>2</span><h2 className="font-display text-lg font-bold uppercase">{ar ? "المراجعة" : "Review"} <span className="text-sm text-muted-foreground">{items.length}</span></h2></div>
           {items.length > 0 && <div className="flex flex-wrap gap-2">
-            <Button variant="ai" size="sm" disabled={busy} onClick={() => run(items)}><Sparkles />Write all with AI</Button>
-            <Button variant="secondary" size="sm" disabled={busy} onClick={() => setItems((xs) => xs.map((x) => ({ ...x, selected: !selected.length })))}>{selected.length ? "Deselect all" : "Select all"}</Button>
+            <Button variant="ai" size="sm" disabled={busy} onClick={() => run(items)}><Sparkles />{tr("Write all with AI")}</Button>
+            <Button variant="secondary" size="sm" disabled={busy} onClick={() => setItems((xs) => xs.map((x) => ({ ...x, selected: !selected.length })))}>{selected.length ? ar ? "إلغاء تحديد الكل" : "Deselect all" : ar ? "تحديد الكل" : "Select all"}</Button>
             <Button variant="ghost" size="icon" title="Export JSON" aria-label="Export JSON" disabled={busy} onClick={exportJson}><Download /></Button>
-            <Button variant="ghost" size="sm" disabled={busy} onClick={() => { if (window.confirm("Clear all unpublished review videos?")) setItems([]); }}><X />Clear</Button>
+            <Button variant="ghost" size="sm" disabled={busy} onClick={() => { if (window.confirm("Clear all unpublished review videos?")) setItems([]); }}><X />{tr("Clear")}</Button>
           </div>}
         </div>
-        {!items.length ? <div className="panel flex flex-col items-center gap-2 p-10 text-center text-sm text-muted-foreground"><Upload className="h-8 w-8 text-primary" />Imported videos appear here for review.</div> : (
+        {!items.length ? <div className="panel flex flex-col items-center gap-2 p-10 text-center text-sm text-muted-foreground"><Upload className="h-8 w-8 text-primary" />{tr("Imported videos appear here for review.")}</div> : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {items.map((it) => (
               <article aria-label={`Review video ${items.indexOf(it) + 1}`} key={it.id} className={`panel overflow-hidden transition-shadow ${it.selected ? "ring-2 ring-primary" : ""}`}>
@@ -223,18 +227,18 @@ function Publisher() {
                     <Button size="icon" variant="ghost" title="Remove video" aria-label="Remove video" disabled={busy} onClick={() => setItems((xs) => xs.filter((x) => x.id !== it.id))}><Trash2 /></Button>
                   </div>
                   <Button variant="ai" size="sm" className="w-full" disabled={busy} onClick={() => run([it])}>{it.status === "analyzing" ? <Loader2 className="animate-spin" /> : <Sparkles />}{it.meta.titleEn ? "Rewrite with AI" : "Write with AI"}</Button>
-                  <label className="block text-xs font-semibold text-muted-foreground">Title<input disabled={busy} className={`${field} mt-1`} value={it.meta.titleEn} onChange={(e) => editMeta(it.id, { ...it.meta, titleEn: e.target.value })} /></label>
-                  <label className="block text-xs font-semibold text-muted-foreground">Description<textarea disabled={busy} rows={3} className={`${field} mt-1`} value={it.meta.descriptionEn} onChange={(e) => editMeta(it.id, { ...it.meta, descriptionEn: e.target.value })} /></label>
+                  <label className="block text-xs font-semibold text-muted-foreground">{tr("Title")}<input disabled={busy} className={`${field} mt-1`} value={it.meta.titleEn} onChange={(e) => editMeta(it.id, { ...it.meta, titleEn: e.target.value })} /></label>
+                  <label className="block text-xs font-semibold text-muted-foreground">{tr("Description")}<textarea disabled={busy} rows={3} className={`${field} mt-1`} value={it.meta.descriptionEn} onChange={(e) => editMeta(it.id, { ...it.meta, descriptionEn: e.target.value })} /></label>
                   <div className="grid grid-cols-2 gap-2">
-                    <label className="block text-xs font-semibold text-muted-foreground">Category<select disabled={busy} className={`${field} mt-1`} value={it.meta.category} onChange={(e) => editMeta(it.id, { ...it.meta, category: e.target.value })}><option value="">Choose…</option>{CATEGORIES.slice(1).map((c) => <option key={c.id} value={c.id}>{c.en}</option>)}</select></label>
-                    <label className="block text-xs font-semibold text-muted-foreground">Tags<input disabled={busy} className={`${field} mt-1`} value={it.meta.tags.join(", ")} onChange={(e) => editMeta(it.id, { ...it.meta, tags: e.target.value.split(",") })} /></label>
+                    <label className="block text-xs font-semibold text-muted-foreground">{tr("Category")}<select disabled={busy} className={`${field} mt-1`} value={it.meta.category} onChange={(e) => editMeta(it.id, { ...it.meta, category: e.target.value })}><option value="">{ar ? "اختر…" : "Choose…"}</option>{CATEGORIES.slice(1).map((c) => <option key={c.id} value={c.id}>{c[lang]}</option>)}</select></label>
+                    <label className="block text-xs font-semibold text-muted-foreground">{tr("Tags")}<input disabled={busy} className={`${field} mt-1`} value={it.meta.tags.join(", ")} onChange={(e) => editMeta(it.id, { ...it.meta, tags: e.target.value.split(",") })} /></label>
                   </div>
                   {it.error && <p role="alert" className="rounded-md bg-primary/10 p-2 text-xs text-primary">{it.error}</p>}
                   <div className="flex items-center justify-between gap-2 border-t pt-3">
-                    <label className="flex items-center gap-2 text-sm font-medium"><input type="checkbox" className="h-4 w-4 accent-primary" disabled={busy} checked={it.status === "approved"} onChange={(e) => e.target.checked ? approve(it) : patch(it.id, { status: "ready" })} />Approved</label>
+                    <label className="flex items-center gap-2 text-sm font-medium"><input type="checkbox" className="h-4 w-4 accent-primary" disabled={busy} checked={it.status === "approved"} onChange={(e) => e.target.checked ? approve(it) : patch(it.id, { status: "ready" })} />{tr("Approved")}</label>
                     <div className="flex gap-1">
-                      <Button variant="secondary" size="sm" disabled={busy} onClick={() => setEditId(it.id)}><Pencil />More</Button>
-                      <Button size="sm" disabled={busy} onClick={() => publish([it])}><Send />Publish</Button>
+                      <Button variant="secondary" size="sm" disabled={busy} onClick={() => setEditId(it.id)}><Pencil />{tr("More")}</Button>
+                      <Button size="sm" disabled={busy} onClick={() => publish([it])}><Send />{tr("Publish")}</Button>
                     </div>
                   </div>
                 </div>
@@ -250,9 +254,9 @@ function Publisher() {
             <p className="text-xs text-muted-foreground"><span className="font-semibold text-foreground">{selected.length}</span> selected · <span className="font-semibold text-success">{approved.length}</span> approved</p>
             <div className="flex flex-wrap gap-2">
               {selected.length > 0 && <>
-                <Button variant="ghost" size="sm" disabled={busy} onClick={() => setItems((xs) => xs.filter((x) => !x.selected))}><Trash2 />Remove</Button>
-                <Button variant="ai" size="sm" disabled={busy} onClick={() => run(selected)}><Sparkles />AI selected</Button>
-                <Button size="sm" disabled={busy} onClick={() => publish(selected)}><Send />Publish selected</Button>
+                <Button variant="ghost" size="sm" disabled={busy} onClick={() => setItems((xs) => xs.filter((x) => !x.selected))}><Trash2 />{tr("Remove")}</Button>
+                <Button variant="ai" size="sm" disabled={busy} onClick={() => run(selected)}><Sparkles />{tr("AI selected")}</Button>
+                <Button size="sm" disabled={busy} onClick={() => publish(selected)}><Send />{tr("Publish selected")}</Button>
               </>}
               {!selected.length && <Button size="sm" disabled={busy || !approved.length} onClick={() => publish(approved)}><Send />Publish {approved.length || ""} approved</Button>}
             </div>
@@ -263,25 +267,25 @@ function Publisher() {
       {editing && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-overlay md:items-center">
           <div className="max-h-[90vh] w-full max-w-lg space-y-2 overflow-y-auto rounded-t-2xl border bg-card p-5 md:rounded-2xl">
-            <div className="flex items-center justify-between"><h3 className="font-display text-lg font-bold uppercase">Video details</h3><Button size="icon" variant="ghost" aria-label="Close details" onClick={() => setEditId(null)}><X /></Button></div>
-            <label className="block text-xs font-semibold text-muted-foreground">Thumbnail URL<input className={field} value={editing.thumbnail} onChange={(e) => patch(editing.id, { thumbnail: e.target.value })} /></label>
+            <div className="flex items-center justify-between"><h3 className="font-display text-lg font-bold uppercase">{tr("Video details")}</h3><Button size="icon" variant="ghost" aria-label="Close details" onClick={() => setEditId(null)}><X /></Button></div>
+            <label className="block text-xs font-semibold text-muted-foreground">{tr("Thumbnail URL")}<input className={field} value={editing.thumbnail} onChange={(e) => patch(editing.id, { thumbnail: e.target.value })} /></label>
             {(["titleEn", "titleAr", "descriptionEn", "descriptionAr"] as const).map((k) => (
               <label key={k} className="block text-xs font-semibold text-muted-foreground">{({ titleEn: "Title", titleAr: "Arabic title", descriptionEn: "Description", descriptionAr: "Arabic description" })[k]}
                 <textarea rows={k.startsWith("desc") ? 3 : 1} dir={k.endsWith("Ar") ? "rtl" : "ltr"} className={field} value={editing.meta[k]} onChange={(e) => patch(editing.id, { meta: { ...editing.meta, [k]: e.target.value }, status: "ready" })} />
               </label>
             ))}
-            <label className="block text-xs font-semibold text-muted-foreground">Category
+            <label className="block text-xs font-semibold text-muted-foreground">{tr("Category")}
               <select className={field} value={editing.meta.category} onChange={(e) => patch(editing.id, { meta: { ...editing.meta, category: e.target.value }, status: "ready" })}>
-                <option value="">—</option>{CATEGORIES.slice(1).map((c) => <option key={c.id} value={c.id}>{c.en}</option>)}
+                <option value="">—</option>{CATEGORIES.slice(1).map((c) => <option key={c.id} value={c.id}>{c[lang]}</option>)}
               </select>
             </label>
-            <label className="block text-xs font-semibold text-muted-foreground">Duration (e.g. 12:34)
+            <label className="block text-xs font-semibold text-muted-foreground">{tr("Duration (e.g. 12:34)")}
               <input className={field} dir="ltr" value={editing.duration} onChange={(e) => patch(editing.id, { duration: e.target.value })} />
             </label>
-            <label className="block text-xs font-semibold text-muted-foreground">Tags (comma separated)
+            <label className="block text-xs font-semibold text-muted-foreground">{tr("Tags (comma separated)")}
               <input className={field} value={editing.meta.tags.join(", ")} onChange={(e) => patch(editing.id, { meta: { ...editing.meta, tags: e.target.value.split(",").map((s) => s.trim()).filter(Boolean) }, status: "ready" })} />
             </label>
-            <Button onClick={() => { if (editing.status === "imported" || editing.status === "error") patch(editing.id, { status: "ready" }); setEditId(null); }} className="h-11 w-full">Save details</Button>
+            <Button onClick={() => { if (editing.status === "imported" || editing.status === "error") patch(editing.id, { status: "ready" }); setEditId(null); }} className="h-11 w-full">{tr("Save details")}</Button>
           </div>
         </div>
       )}

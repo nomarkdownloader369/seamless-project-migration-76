@@ -10,7 +10,7 @@ import { conversationSchema, guestTokenSchema, storedGuestToken } from "@/lib/su
 import { createContactConversation, getVisitorConversations, sendVisitorMessage } from "@/lib/support.functions";
 
 export const supportField = "mt-1 w-full rounded-md border bg-surface px-3 py-2 text-sm outline-none focus:border-primary";
-export function ContactWorkspace({ videoId }: { videoId?: string }) {
+export function ContactWorkspace({ videoId }: { videoId?: string | undefined }) {
   const { lang } = useI18n(); const ar = lang === "ar"; const { user, ready } = useAuth();
   const [token, setToken] = useState(""); const [selected, setSelected] = useState<string>();
   const [creating, setCreating] = useState(false); const [busy, setBusy] = useState(false);

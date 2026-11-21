@@ -96,7 +96,7 @@ function Login() {
 
         <div className="mt-6 grid grid-cols-2 rounded-full bg-surface-2 p-1" role="tablist">
           {(["in", "up"] as const).map((m) => (
-            <Button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => { setMode(m); setError(null); }}
+            <Button variant="ghost" key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => { setMode(m); setError(null); }}
               className={`rounded-full py-2 text-sm font-semibold transition-colors ${mode === m ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}>
               {m === "in" ? t("tabSignIn") : t("tabSignUp")}
             </Button>

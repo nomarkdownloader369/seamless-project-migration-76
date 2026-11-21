@@ -25,7 +25,7 @@ export const createContactConversation = createServerFn({ method: "POST" }).inpu
   const userId = await optionalOwner();
   const video = await publicVideo(data.videoId);
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data: id, error } = await supabaseAdmin.rpc("support_create_contact", { p_hash: hash, p_user: userId ?? undefined, p_name: data.name, p_subject: data.subject, p_kind: data.kind, p_text: data.text, p_video_id: video?.id, p_video_title: video?.title, p_video_url: video?.url, p_thumbnail: video?.thumbnail ?? "" });
+  const { data: id, error } = await supabaseAdmin.rpc("support_create_contact", { p_hash: hash, ...(userId ? { p_user: userId } : {}), p_name: data.name, p_subject: data.subject, p_kind: data.kind, p_text: data.text, ...(video ? { p_video_id: video.id, p_video_title: video.title, p_video_url: video.url } : {}), p_thumbnail: video?.thumbnail ?? "" });
   if (error?.code === "23505") throw new Error("This request already exists in your conversations.");
   if (error || !id) throw new Error("Message was not saved. Please try again.");
   return { id };
@@ -62,7 +62,7 @@ export const sendVisitorMessage = createServerFn({ method: "POST" }).inputValida
 export const getSupportInbox = createServerFn({ method: "POST" }).middleware([requireSupportAdmin]).handler(async ({ context }) => {
   const [reports, conversations, activity] = await Promise.all([
     context.supabase.from("video_reports").select("id,video_id,video_title,video_url,thumbnail,reason,status,created_at").order("created_at", { ascending: false }).limit(500),
-    context.supabase.from("contact_conversations").select("id,sender_name,subject,kind,video_id,video_title,video_url,thumbnail,admin_unread,created_at,updated_at").order("updated_at", { ascending: false }).limit(500),
+    context.supabase.from("contact_conversations").select("id,sender_name,subject,kind,video_id,video_title,video_url,thumbnail,last_message,admin_unread,created_at,updated_at").order("updated_at", { ascending: false }).limit(500),
     context.supabase.from("support_activity").select("id,action,target_id,created_at").order("created_at", { ascending: false }).limit(100),
   ]);
   if (reports.error || conversations.error || activity.error) throw new Error("Could not load inbox.");

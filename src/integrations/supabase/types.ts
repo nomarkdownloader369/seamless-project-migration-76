@@ -108,6 +108,7 @@ export type Database = {
           created_at: string
           id: string
           kind: string
+          last_message: string
           sender_hash: string
           sender_name: string
           sender_unread: number
@@ -124,6 +125,7 @@ export type Database = {
           created_at?: string
           id?: string
           kind: string
+          last_message?: string
           sender_hash: string
           sender_name: string
           sender_unread?: number
@@ -140,6 +142,7 @@ export type Database = {
           created_at?: string
           id?: string
           kind?: string
+          last_message?: string
           sender_hash?: string
           sender_name?: string
           sender_unread?: number

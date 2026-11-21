@@ -1,4 +1,4 @@
-import { getRequestHeader } from "@tanstack/react-start/server";
+import { getRequest, getRequestHeader } from "@tanstack/react-start/server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 export async function hashVisitor(token: string) {
@@ -15,7 +15,7 @@ export async function publicVideo(id?: string) {
   if (!id) return null;
   const { data, error } = await supabaseAdmin.from("videos").select("id,title,thumbnail,status").eq("id", id).eq("status", "published").single();
   if (error || !data) throw new Error("Video unavailable.");
-  return { id: data.id, title: data.title, thumbnail: data.thumbnail, url: `/watch/${encodeURIComponent(data.id)}` };
+  return { id: data.id, title: data.title, thumbnail: data.thumbnail, url: new URL(`/watch/${encodeURIComponent(data.id)}`, getRequest().url).href };
 }
 export async function ownConversation(id: string, token: string) {
   const hash = await hashVisitor(token);
