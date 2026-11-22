@@ -43,6 +43,13 @@
       "when": 1795293127998,
       "tag": "0005_least_privilege_visitor_support",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795328867069,
+      "tag": "0006_assistant_control_center",
+      "breakpoints": true
     }
   ]
 }

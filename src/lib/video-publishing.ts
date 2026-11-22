@@ -7,6 +7,11 @@ export function reviewError(meta: AiMetadata): string | null {
   return null;
 }
 
+/** Approval is per video, and any edit invalidates the previous approval. */
+export function publicationAllowed(items: { status: string; meta: AiMetadata }[]): boolean {
+  return items.length > 0 && items.every((item) => item.status === "approved" && reviewError(item.meta) === null);
+}
+
 /** Store tags with the caption in the existing description field. */
 export function publicationDescription(meta: AiMetadata): string {
   const caption = meta.descriptionEn.trim() || meta.descriptionAr.trim();

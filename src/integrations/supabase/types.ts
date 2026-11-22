@@ -46,6 +46,42 @@ export type Database = {
           },
         ]
       }
+      assistant_automations: {
+        Row: {
+          command: string
+          created_at: string
+          enabled: boolean
+          id: string
+          name: string
+          recurrence: string
+          scheduled_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          command: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          name: string
+          recurrence?: string
+          scheduled_at: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          command?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          name?: string
+          recurrence?: string
+          scheduled_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       assistant_messages: {
         Row: {
           created_at: string
@@ -71,6 +107,62 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "assistant_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "assistant_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assistant_tasks: {
+        Row: {
+          command: string
+          created_at: string
+          error: string | null
+          execution_mode: string
+          finished_at: string | null
+          id: string
+          kind: string
+          logs: Json
+          started_at: string | null
+          status: string
+          thread_id: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          command: string
+          created_at?: string
+          error?: string | null
+          execution_mode?: string
+          finished_at?: string | null
+          id?: string
+          kind: string
+          logs?: Json
+          started_at?: string | null
+          status?: string
+          thread_id?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          command?: string
+          created_at?: string
+          error?: string | null
+          execution_mode?: string
+          finished_at?: string | null
+          id?: string
+          kind?: string
+          logs?: Json
+          started_at?: string | null
+          status?: string
+          thread_id?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assistant_tasks_thread_id_fkey"
             columns: ["thread_id"]
             isOneToOne: false
             referencedRelation: "assistant_threads"
@@ -352,6 +444,41 @@ export type Database = {
       assistant_clear_conversation: {
         Args: { p_thread_id: string }
         Returns: undefined
+      }
+      assistant_create_task: {
+        Args: {
+          p_command: string
+          p_confirmed: boolean
+          p_id: string
+          p_kind: string
+          p_thread_id?: string
+        }
+        Returns: string
+      }
+      assistant_delete_automation: {
+        Args: { p_confirmed: boolean; p_id: string }
+        Returns: undefined
+      }
+      assistant_manage_thread: {
+        Args: {
+          p_action: string
+          p_confirmed?: boolean
+          p_id: string
+          p_title?: string
+        }
+        Returns: undefined
+      }
+      assistant_save_automation: {
+        Args: {
+          p_command: string
+          p_confirmed: boolean
+          p_enabled: boolean
+          p_id: string
+          p_name: string
+          p_recurrence: string
+          p_scheduled_at: string
+        }
+        Returns: string
       }
       has_role: {
         Args: {

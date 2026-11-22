@@ -1,4 +1,6 @@
 # Roadmap
+- [ ] Upgrade existing Assistant: conversation search/rename/delete, task history, automation drafts, CloudFam status and shared individual video approvals
+- [ ] Verify Control Center admin access, saved history, confirmation gates and desktop/mobile RTL/LTR
 - [x] Apply TABOOBOX branding, Arabic-first RTL/LTR, direct login, interaction feedback and trending badge changes
 - [x] Add secure video reports and administrative review with durable activity
 - [x] Add private guest/member contact conversations, replies and unread counts
